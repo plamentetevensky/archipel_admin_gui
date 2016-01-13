@@ -2,3 +2,5 @@
 bootstrap.json
 build/
 ext/
+*.komodoproject
+*.log
