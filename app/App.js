@@ -28,12 +28,54 @@ Ext.define('Desktop.App', {
 
     init: function() {
         // custom logic before getXYZ methods get called...
-
-        this.callParent();
-
-        // now ready...
+        var self = this;
+        
+        if (localStorage.getItem("AuthToken")) {
+            //Check/refresh auth_token
+            self.callParent();
+        } else {
+            var win;
+            win = Ext.create('widget.window', {
+                title: 'Login',
+                modal: true,
+                bodyPadding: 10,
+                resizable   : false,
+                draggable   : false,
+                closable    : false,
+                autoShow: true,
+                items: [{
+                    region: 'center',
+                    reference: 'form',
+                    items: [{
+                        xtype: 'textfield',
+                        name: 'username',
+                        fieldLabel: 'Username',
+                        allowBlank: false
+                    }, {
+                        xtype: 'textfield',
+                        name: 'password',
+                        inputType: 'password',
+                        fieldLabel: 'Password',
+                        allowBlank: false
+                    }],
+                    buttons: [{
+                        text: 'Login',
+                        formBind: true,
+                        listeners: {
+                            click: 'onLoginClick'
+                        },
+                        onLoginClick: function() {
+                            //TODO: Check login and get auth_token
+                            localStorage.setItem("AuthToken", "abcdef");
+                            win.close();
+                            self.init();
+                        }
+                    }]
+                }]
+            })
+        }
     },
-
+    
     getModules : function(){
         return [
             new Desktop.VideoWindow(),
@@ -117,7 +159,16 @@ Ext.define('Desktop.App', {
     },
 
     onLogout: function () {
-        Ext.Msg.confirm('Logout', 'Are you sure you want to logout?');
+        var self = this;
+        Ext.Msg.confirm('Logout', 'Are you sure you want to logout?',
+            function(btn){
+                if (btn == 'yes') {
+                    //TODO: Remove auth_token from server
+                    localStorage.removeItem("AuthToken");
+                    self.desktop.destroy();
+                    self.init();
+                }
+        });
     },
 
     onSettings: function () {
@@ -127,3 +178,4 @@ Ext.define('Desktop.App', {
         dlg.show();
     }
 });
+
