@@ -1,6 +1,5 @@
 .architect
-bootstrap.json
-bootstrap.js
+bootstrap.*
 build/
 ext/
 sass/example/*

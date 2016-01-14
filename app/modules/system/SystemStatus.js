@@ -5,7 +5,7 @@
 * http://www.sencha.com/license
 */
 
-Ext.define('Desktop.SystemStatus', {
+Ext.define('Desktop.modules.system.SystemStatus', {
     extend: 'Ext.ux.desktop.Module',
 
     requires: [
@@ -13,7 +13,7 @@ Ext.define('Desktop.SystemStatus', {
         'Ext.data.JsonStore'
     ],
 
-    id: 'systemstatus',
+    id: 'modules_system_systemstatus',
 
     refreshRate: 500,
 
@@ -42,7 +42,7 @@ Ext.define('Desktop.SystemStatus', {
         me.generateCpuLoad();
 
         return desktop.createWindow({
-            id: 'systemstatus',
+            id: 'modules_system_systemstatus',
             title: 'System Status',
             width: 800,
             height: 600,

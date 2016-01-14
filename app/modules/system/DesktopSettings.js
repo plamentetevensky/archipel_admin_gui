@@ -5,7 +5,7 @@
  * http://www.sencha.com/license
  */
 
-Ext.define('Desktop.Settings', {
+Ext.define('Desktop.modules.system.DesktopSettings', {
     extend: 'Ext.window.Window',
 
     uses: [
@@ -21,7 +21,7 @@ Ext.define('Desktop.Settings', {
     ],
 
     layout: 'anchor',
-    title: 'Change Settings',
+    title: 'Desktop settings',
     modal: true,
     width: 640,
     height: 480,

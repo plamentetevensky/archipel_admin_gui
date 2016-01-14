@@ -12,18 +12,18 @@ Ext.define('Desktop.App', {
         'Ext.window.MessageBox',
 
         'Ext.ux.desktop.ShortcutModel',
-
-        'Desktop.SystemStatus',
-        'Desktop.VideoWindow',
+        // system modules
+        'Desktop.modules.system.SystemStatus',
+        'Desktop.modules.system.DesktopSettings',
+        // media modules
+        'Desktop.modules.media.VideoPlayer',
+        
         'Desktop.GridWindow',
         'Desktop.TabWindow',
         'Desktop.AccordionWindow',
         'Desktop.Notepad',
         'Desktop.BogusMenuModule',
-        'Desktop.BogusModule',
-
-//        'Desktop.Blockalanche',
-        'Desktop.Settings'
+        'Desktop.BogusModule'
     ],
 
     init: function() {
@@ -31,7 +31,7 @@ Ext.define('Desktop.App', {
         var self = this;
         
         if (localStorage.getItem("AuthToken")) {
-            //Check/refresh auth_token
+            // TODO: Check/refresh auth_token
             self.callParent();
         } else {
             var win;
@@ -65,7 +65,7 @@ Ext.define('Desktop.App', {
                             click: 'onLoginClick'
                         },
                         onLoginClick: function() {
-                            //TODO: Check login and get auth_token
+                            // TODO: Check login and get auth_token
                             localStorage.setItem("AuthToken", "abcdef");
                             win.close();
                             self.init();
@@ -78,9 +78,12 @@ Ext.define('Desktop.App', {
     
     getModules : function(){
         return [
-            new Desktop.VideoWindow(),
-            //new Desktop.Blockalanche(),
-            new Desktop.SystemStatus(),
+            // system modules
+            new Desktop.modules.system.SystemStatus(),
+            
+            // media modules
+            new Desktop.modules.media.VideoPlayer(),
+            
             new Desktop.GridWindow(),
             new Desktop.TabWindow(),
             new Desktop.AccordionWindow(),
@@ -94,10 +97,8 @@ Ext.define('Desktop.App', {
         var me = this, ret = me.callParent();
 
         return Ext.apply(ret, {
-            //cls: 'ux-desktop-black',
-
             contextMenuItems: [
-                { text: 'Change Settings', handler: me.onSettings, scope: me }
+                { text: 'Change desktop settings', handler: me.onSettings, scope: me }
             ],
 
             shortcuts: Ext.create('Ext.data.Store', {
@@ -106,7 +107,7 @@ Ext.define('Desktop.App', {
                     { name: 'Grid Window', iconCls: 'grid-shortcut', module: 'grid-win' },
                     { name: 'Accordion Window', iconCls: 'accordion-shortcut', module: 'acc-win' },
                     { name: 'Notepad', iconCls: 'notepad-shortcut', module: 'notepad' },
-                    { name: 'System Status', iconCls: 'cpu-shortcut', module: 'systemstatus'}
+                    { name: 'System Status', iconCls: 'cpu-shortcut', module: 'modules_system_systemstatus'}
                 ]
             }),
 
@@ -127,7 +128,7 @@ Ext.define('Desktop.App', {
                 width: 100,
                 items: [
                     {
-                        text:'Settings',
+                        text:'Desktop settings',
                         iconCls:'settings',
                         handler: me.onSettings,
                         scope: me
@@ -172,7 +173,7 @@ Ext.define('Desktop.App', {
     },
 
     onSettings: function () {
-        var dlg = new Desktop.Settings({
+        var dlg = new Desktop.modules.system.DesktopSettings({
             desktop: this.desktop
         });
         dlg.show();

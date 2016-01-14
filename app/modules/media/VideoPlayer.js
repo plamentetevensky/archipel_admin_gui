@@ -6,15 +6,15 @@
 
 // From code originally written by David Davis (http://www.sencha.com/blog/html5-video-canvas-and-ext-js/)
 
-Ext.define('Desktop.VideoWindow', {
+Ext.define('Desktop.modules.media.VideoPlayer', {
     extend: 'Ext.ux.desktop.Module',
 
     uses: [
         'Ext.ux.desktop.Video'
     ],
 
-    id:'video',
-    windowId: 'video-window',
+    id:'modules-media-video',
+    windowId: 'video-player',
 
     tipWidth: 160,
     tipHeight: 96,
@@ -44,7 +44,7 @@ Ext.define('Desktop.VideoWindow', {
                 items: [
                     {
                         xtype: 'video',
-                        id: 'video-player',
+                        id: 'html5-video-player',
                         src: [
                             // browser will pick the format it likes most:
                             { src: 'http://dev.sencha.com/desktopvideo.mp4', type: 'video/mp4' },
