@@ -1,6 +1,8 @@
 .architect
 bootstrap.json
+bootstrap.js
 build/
 ext/
+sass/example/*
 *.komodoproject
 *.log
